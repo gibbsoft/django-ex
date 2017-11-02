@@ -12,9 +12,20 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
+def str2bool(v):
+  try:
+      if type(v) is bool:
+          return v
+      elif type(v) is int:
+          return True if v > 0 else False
+  except:
+      return False
+  return v.lower() in ("yes", "true", "t", "1")
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+USE_X_FORWARDED_HOST = str2bool(os.getenv('USE_X_FORWARDED_HOST', False))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -26,6 +37,7 @@ SECRET_KEY = os.getenv(
     # safe value used for development when DJANGO_SECRET_KEY might not be set
     '9e4@&tw46$l31)zrqe3wi+-slqm(ruvz&se0^%9#6(_w3ui!c0'
 )
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
